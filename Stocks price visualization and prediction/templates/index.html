@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Price Prediction</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <h1>Stock Price Prediction</h1>
+
+    <form method="POST">
+        <div>
+            <label for="stock_name">Primary Stock Symbol:</label><br>
+            <input type="text" id="stock_name" name="stock_name" required><br><br>
+        </div>
+        <div>
+            <label for="comparison_stock">Comparison Stock Symbol (Optional):</label><br>
+            <input type="text" id="comparison_stock" name="comparison_stock"><br><br>
+        </div>
+        <div>
+            <label for="start_date">Start Date:</label><br>
+            <input type="date" id="start_date" name="start_date" required><br><br>
+        </div>
+        <div>
+            <label for="end_date">End Date:</label><br>
+            <input type="date" id="end_date" name="end_date" required><br><br>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if stock_name %}
+        <h2>Primary Stock: {{ stock_name }}</h2>
+        {% if highest_price_primary is not none and lowest_price_primary is not none %}
+            <p>Highest Price: {{ highest_price_primary }}</p>
+            <p>Lowest Price: {{ lowest_price_primary }}</p>
+        {% endif %}
+    {% endif %}
+
+    {% if comparison_stock %}
+        <h2>Comparison Stock: {{ comparison_stock }}</h2>
+        {% if highest_price_comparison is not none and lowest_price_comparison is not none %}
+            <p>Highest Price: {{ highest_price_comparison }}</p>
+            <p>Lowest Price: {{ lowest_price_comparison }}</p>
+        {% endif %}
+    {% endif %}
+
+    {% if error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% endif %}
+
+    {% if historical_plot %}
+        <h2>Historical Stock Prices</h2>
+        <div>{{ historical_plot | safe }}</div>
+    {% endif %}
+
+    {% if prediction_plot %}
+        <h2>Prediction Graph</h2>
+        <div>{{ prediction_plot | safe }}</div>
+    {% endif %}
+</body>
+</html>
